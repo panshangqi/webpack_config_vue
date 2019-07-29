@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div><img src="../assets/logo.png" style="width: 100px"></div>
+    <div><img src="../imgs/favicon.png" style="width: 100px"></div>
     <div>
       <router-link to="/">首页</router-link>
       <router-link to="/about">关于</router-link>
@@ -23,7 +23,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #333;
   margin-top: 60px;
 }
   body, html{

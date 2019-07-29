@@ -3,17 +3,19 @@ const Webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
-
+const { VueLoaderPlugin } = require('vue-loader')
 const path = require('path')
 const vars = require('./variables')
+const graphs = require('./graphs')
 //module.exports
 var BaseConfig = {
-    context: path.resolve(__dirname, '../'), //基础目录，绝对路径
-    entry: `${vars.routes_root}/index.js`,
+    //context: path.resolve(__dirname, '../'), //基础目录，绝对路径
+    entry: JSON.parse(JSON.stringify(graphs.entries)),
     output: {
         path: vars.dist_root,
         publicPath: vars.dev_publicPath,//相对于 HTML 页面的资源
-        filename: './[name].[hash:8].js'
+        filename: './[name].[hash:8].js',
+        chunkFilename: '[name].js'
     },
     resolve: {
         extensions: ['.js','.vue','.json'],
@@ -41,7 +43,7 @@ var BaseConfig = {
             //     }
             // },
             {   //解析转换vue文件，提取其中的script，style，以及template，交给loader处理
-                test: '/\.vue$/',
+                test: /\.vue$/,
                 loader: 'vue-loader',
                 options: {
 
@@ -54,6 +56,10 @@ var BaseConfig = {
                     'vue-style-loader',// 用来提供css的热重载
                     'css-loader'// 用来处理css中的资源路径为模块
                 ]
+            },
+            {
+                test:/\.less$/,
+                loader: "style-loader!css-loader!less-loader"
             },
             {
                 test: /\.js$/,
@@ -90,23 +96,20 @@ var BaseConfig = {
     devServer: {hotOnly: true},
     mode: 'development',
     plugins: [
+        new VueLoaderPlugin(),
         new ExtractTextPlugin("style.css"), //把vue文件的style提取到style.css
-        new HtmlWebpackPlugin({
-            filename: './src/templates/index.html',
-            template: `${vars.templates_root}/index.html`,
-            favicon: `${vars.imgs_root}/favicon.png`,
-            chunks: ['vendors', 'common'],
-            hash: true,
-            inject: 'body',
-            minify:{
-                caseSensitive: false, //以区分大小写的方式处理自定义标签内的属性
-                removeComments: true, //去除注释
-                collapseWhitespace: false  //去除空格
-            }
-        }),
+        ...graphs.html_plugins
     ]
 }
-
+for(let p in BaseConfig.entry){
+    BaseConfig.entry[p].unshift(`webpack-dev-server/client?http://localhost:${vars.port}/`)
+    BaseConfig.entry[p].unshift(`webpack/hot/dev-server`)
+}
+BaseConfig.devtool = 'cheap-module-source-map';
+console.log(BaseConfig)
+for(let name of graphs.graphs){
+    console.log(`http://localhost:${vars.port}/templates/${name}.html`)
+}
 //代理配置
 var final_proxy = {
     "/api/*":{
@@ -127,11 +130,11 @@ var server = new WebpackDevServer(compiler, {
     contentBase: "./public", //默认webpack-dev-server会为根文件夹提供本地服务器
     hot: true,                   //允许热加载
     hotOnly: true,               //当编译失败时，不刷新页面
-    open:true,//自动拉起浏览器
+    open: false,//自动拉起浏览器
     historyApiFallback: true,
     disableHostCheck: true,
     proxy: final_proxy,
-    //publicPath: vars.dev_publicPath,
+    publicPath: vars.dev_publicPath,
     overlay: true,                     //用来在编译出错的时候，在浏览器页面上显示错误
     progress:false,                    //显示打包的进度
     stats: {
