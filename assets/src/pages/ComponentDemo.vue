@@ -1,7 +1,11 @@
 <template>
     <div id="component_demo">
         <button v-on:click="openClick">打开弹出层</button>
-        <ele-dialog ref="sub_dialog"></ele-dialog>
+        <v-dialog ref="sub_dialog">
+            <div>
+                123456
+            </div>
+        </v-dialog>
     </div>
 </template>
 
@@ -11,7 +15,7 @@
     export default {
         name: "component_demo",
         components:{
-            'ele-dialog': DialogEx
+            'v-dialog': DialogEx
         },
         methods: {
             openClick: function () {
@@ -25,5 +29,7 @@
 </script>
 
 <style scoped>
-
+#component_demo{
+    padding: 20px;
+}
 </style>
