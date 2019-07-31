@@ -5,7 +5,8 @@ import HelloWorld from '@/pages/HelloWorld'
 import About from '@/pages/About'
 import Example from '@/pages/Example'
 import ComponentDemo from '@/pages/ComponentDemo'
-
+import SparrowUI from '../sparrow-ui'
+Vue.use(SparrowUI)
 Vue.use(Router)
 Vue.config.productionTip = false
 

@@ -1,21 +1,26 @@
 <template>
     <div id="component_demo">
         <button v-on:click="openClick">打开弹出层</button>
-        <v-dialog ref="sub_dialog">
-            <div>
-                123456
+        <sa-button>Default</sa-button>
+        <sa-button type="primary">Primary</sa-button>
+        <sa-button type="success">Success</sa-button>
+        <sa-button type="warning">Warning</sa-button>
+        <sa-button type="danger">Danger</sa-button>
+        <sa-dialog ref="sub_dialog">
+            <div style="height:200px;">
+
             </div>
-        </v-dialog>
+        </sa-dialog>
     </div>
 </template>
 
 <script>
-    import DialogEx from '@/components/DialogEx/DialogEx.vue'
+    //import DialogEx from '@/components/DialogEx/DialogEx.vue'
 
     export default {
         name: "component_demo",
         components:{
-            'v-dialog': DialogEx
+            //'v-dialog': DialogEx
         },
         methods: {
             openClick: function () {
