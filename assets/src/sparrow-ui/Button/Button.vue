@@ -5,37 +5,47 @@
 </template>
 
 <script>
-    import theme from '../theme.js'
+    import Theme from '../theme.js'
+    let color_map = {
+        'default': Theme.theme_color,
+        'primary': Theme.theme_color,
+        'success': Theme.theme_color_success,
+        'warning': Theme.theme_color_warning,
+        'danger': Theme.theme_color_danger
+    }
     export default{
         name: 'sabutton',
         props: ['type'],
         data() {
             return {
+                btn_type: this.type
             }
         },
         created() {
 
         },
         mounted() {
-            if(this.type == undefined){
+            this.btn_type = this.btn_type || 'default'
+            if(this.btn_type == 'default'){
                 this.$el.classList.add('default')
-            }else if(this.type == 'primary'){
+            }else if(this.btn_type == 'primary'){
                 this.$el.classList.add('primary')
-            }else if(this.type == 'success'){
+            }else if(this.btn_type == 'success'){
                 this.$el.classList.add('success')
-            }else if(this.type == 'warning'){
+            }else if(this.btn_type == 'warning'){
                 this.$el.classList.add('warning')
-            }else if(this.type == 'danger'){
+            }else if(this.btn_type == 'danger'){
                 this.$el.classList.add('danger')
             }
         },
         methods: {
             btnClick: function () {
                 let ci = 0
-                
+                let borderColor = color_map[this.btn_type]
+
                 let timer = setInterval(()=>{
                     ci++
-                    this.$el.style.boxShadow = '0 0 '+ci+'px ' + theme.color_alpha(theme.theme_color, 0.8)
+                    this.$el.style.boxShadow = '0 0 '+ci+'px ' + Theme.color_alpha(borderColor, 0.8)
                     if(ci>8){
                         this.$el.style.boxShadow = '0 0 0 transparent'
                         if(timer)

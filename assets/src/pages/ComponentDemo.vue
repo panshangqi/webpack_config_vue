@@ -1,11 +1,25 @@
 <template>
     <div id="component_demo">
-        <button v-on:click="openClick">打开弹出层</button>
-        <sa-button>Default</sa-button>
-        <sa-button type="primary">Primary</sa-button>
-        <sa-button type="success">Success</sa-button>
-        <sa-button type="warning">Warning</sa-button>
-        <sa-button type="danger">Danger</sa-button>
+        <div>
+            <button v-on:click="openClick">打开弹出层</button>
+        </div>
+        <br/>
+        <div>
+            <sa-button>Default</sa-button>
+            <sa-button type="primary">Primary</sa-button>
+            <sa-button type="success">Success</sa-button>
+            <sa-button type="warning">Warning</sa-button>
+            <sa-button type="danger">Danger</sa-button>
+        </div>
+        <br/>
+        <div>
+            <sa-button>Default</sa-button>
+            <sa-button type="primary">Primary</sa-button>
+            <sa-button type="success">Success</sa-button>
+            <sa-button type="warning">Warning</sa-button>
+            <sa-button type="danger">Danger</sa-button>
+        </div>
+
         <sa-dialog ref="sub_dialog">
             <div style="height:200px;">
 
