@@ -30,12 +30,12 @@
                 document.getElementById('dialog_box').style.marginTop = '50px'
                 setTimeout( () => {
                     this.visibled = false
-                },1000)
+                },500)
             },
             showDialog: function () {
                 this.visibled = true
                 setTimeout(function () {
-                    document.getElementById('dialog_ex').style.backgroundColor = '#00000080'
+                    document.getElementById('dialog_ex').style.backgroundColor = '#000a0080'
                     document.getElementById('dialog_box').style.opacity = '1.0'
                     document.getElementById('dialog_box').style.marginTop = '110px'
                 }, 110)
@@ -52,11 +52,12 @@
     position: fixed;
     width: 100%;
     height: 100%;
-    letf:0;
+    left:0;
     top:0;
+    margin: 0;
     z-index: 10000;
     background-color: #00000000;
-    transition: background-color 1s;
+    transition: background-color 500ms;
     .dialog_box{
         width: 500px;
         height: auto;

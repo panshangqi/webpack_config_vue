@@ -1,5 +1,5 @@
 <template>
-    <button id="sa_button" v-on:click="btnClick">
+    <button id="sa_button" v-on:click="btnClick" type="button">
         <slot></slot>
     </button>
 </template>
@@ -15,10 +15,12 @@
     }
     export default{
         name: 'sabutton',
-        props: ['type'],
+        props: ['type', 'empty', 'round','onChange'],
         data() {
             return {
-                btn_type: this.type
+                btn_type: this.type,
+                btn_empty: this.empty,
+                btn_round: this.round
             }
         },
         created() {
@@ -26,23 +28,25 @@
         },
         mounted() {
             this.btn_type = this.btn_type || 'default'
-            if(this.btn_type == 'default'){
-                this.$el.classList.add('default')
-            }else if(this.btn_type == 'primary'){
-                this.$el.classList.add('primary')
-            }else if(this.btn_type == 'success'){
-                this.$el.classList.add('success')
-            }else if(this.btn_type == 'warning'){
-                this.$el.classList.add('warning')
-            }else if(this.btn_type == 'danger'){
-                this.$el.classList.add('danger')
+            for(let _type in color_map){
+                if(_type === this.btn_type){
+                    this.$el.classList.add(_type)
+                    if(this.empty === ''){
+                        this.$el.style.backgroundColor = Theme.color_alpha(color_map[_type], 0.15)
+                        this.$el.style.color = color_map[_type]
+                    }
+                    if(this.round === ''){
+                        this.$el.style.borderRadius = '50px'
+                    }
+                    break
+                }
             }
         },
         methods: {
             btnClick: function () {
                 let ci = 0
                 let borderColor = color_map[this.btn_type]
-
+                console.log('click')
                 let timer = setInterval(()=>{
                     ci++
                     this.$el.style.boxShadow = '0 0 '+ci+'px ' + Theme.color_alpha(borderColor, 0.8)
@@ -52,7 +56,8 @@
                             clearInterval(timer)
                     }
                 },40)
-
+                console.log(this.onChange)
+                this.onChange()
             }
         },
         computed: {
@@ -65,7 +70,9 @@
     .base_btn{
         position: relative;
         border-radius: 3px;
-        width: 100px;
+        min-width: 100px;
+        padding-left: 15px;
+        padding-right: 15px;
         height: 36px;
         outline: none;
         cursor: pointer;
