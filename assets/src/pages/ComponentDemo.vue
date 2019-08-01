@@ -1,11 +1,11 @@
 <template>
     <div id="component_demo">
         <div>
-            <sa-button v-on:click.native="openClick">打开弹出层</sa-button>
+            <sa-button v-on:onClick="openClick">打开弹出层</sa-button>
         </div>
         <br/>
         <div>
-            <sa-button onChange={btnChange}>Default</sa-button>
+            <sa-button >Default</sa-button>
             <sa-button type="primary">Primary</sa-button>
             <sa-button type="success">Success</sa-button>
             <sa-button type="warning">Warning</sa-button>
@@ -52,9 +52,6 @@
             //'v-dialog': DialogEx
         },
         methods: {
-            btnChange: function() {
-                console.log('onchange')
-            },
             openClick: function () {
                 this.$refs.sub_dialog.showDialog()
             }

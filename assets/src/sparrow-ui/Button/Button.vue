@@ -46,7 +46,7 @@
             btnClick: function () {
                 let ci = 0
                 let borderColor = color_map[this.btn_type]
-                console.log('click')
+
                 let timer = setInterval(()=>{
                     ci++
                     this.$el.style.boxShadow = '0 0 '+ci+'px ' + Theme.color_alpha(borderColor, 0.8)
@@ -55,9 +55,8 @@
                         if(timer)
                             clearInterval(timer)
                     }
-                },40)
-                console.log(this.onChange)
-                this.onChange()
+                }, 40)
+                this.$emit('onClick', 'click')
             }
         },
         computed: {
