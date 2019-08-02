@@ -40,6 +40,11 @@
 
             </div>
         </sa-dialog>
+        <div>
+            <sa-menu v-bind:dataSource="menuData">
+
+            </sa-menu>
+        </div>
     </div>
 </template>
 
@@ -57,7 +62,41 @@
             }
         },
         data() {
-            return {}
+            return {
+                menuData:[
+                    {
+                        key: '1',
+                        name: '组件',
+                        submenus:[
+                            {
+                                key: '10',
+                                name: '通用',
+                                submenus: [
+                                    {key: '110', name: 'Button'},
+                                    {key: '111', name: 'Icon' }
+                                ]
+                            },
+                            {
+                                key: '11',
+                                name: '数据录入',
+                                submenus: [
+                                    {key: '110', name: 'Input'},
+                                    {key: '111', name: 'Radio'}
+                                ]
+                            },
+                            {
+                                key: '12',
+                                name: '数据展示',
+                                submenus: [
+                                    {key: '120', name: '气泡'},
+                                    {key: '121', name: '标签'},
+                                    {key: '122', name: '提示'}
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
         }
     }
 </script>

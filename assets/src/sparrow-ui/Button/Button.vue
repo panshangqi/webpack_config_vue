@@ -14,7 +14,7 @@
         'danger': Theme.theme_color_danger
     }
     export default{
-        name: 'sabutton',
+        name: 'sa-button',
         props: ['type', 'empty', 'round','onChange'],
         data() {
             return {

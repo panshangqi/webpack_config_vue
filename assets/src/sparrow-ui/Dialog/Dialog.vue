@@ -16,7 +16,7 @@
 
 <script>
     export default {
-        name: "dialog",
+        name: "sa-dialog",
         data() {
             return {
                 visibled: false,

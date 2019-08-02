@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div>
-      <img src="../imgs/favicon.png" style="width: 100px">
+        <img id="logo" src="../imgs/favicon.png" style="width: 100px">
     </div>
     <div>
       <router-link to="/">首页</router-link>
@@ -19,17 +19,29 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #333;
-  margin-top: 60px;
+  margin-top: 30px;
 }
   body, html{
     padding: 0;
     margin: 0;
   }
+  #logo{
+    animation: que 4s linear infinite;
+  }
+  @keyframes que {
+    0%{
+      transform: rotateY(0deg);
+    }
+    100%{
+      transform: rotateY(360deg);
+    }
+  }
+
 </style>
