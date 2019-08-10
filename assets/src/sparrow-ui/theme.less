@@ -2,3 +2,24 @@
 @theme_color_success: #67c23a;
 @theme_color_warning: #e6a23c;
 @theme_color_danger: #f56c6c;
+.theme_arrow_base(@size: 6px){
+    width: 0;
+    height: 0;
+    border: @size solid transparent;
+}
+.theme_arrow_down{
+    .theme_arrow_base;
+    border-top-color: @theme_color;
+}
+.theme_arrow_right(@color, @size: 6px){
+    .theme_arrow_base(@size);
+    border-left-color: @color;
+}
+.theme_arrow_up{
+    .theme_arrow_base;
+    border-bottom-color: @theme_color;
+}
+.theme_arrow_left{
+    .theme_arrow_base;
+    border-right-color: @theme_color;
+}

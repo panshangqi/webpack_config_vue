@@ -9,7 +9,8 @@
             <div class="dialog_content">
                 <slot></slot>
             </div>
-            <div class="dialog_footer"></div>
+            <div class="dialog_footer">
+            </div>
         </div>
     </div>
 </template>

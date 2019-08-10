@@ -5,6 +5,7 @@ import HelloWorld from '@/pages/HelloWorld'
 import About from '@/pages/About'
 import Example from '@/pages/Example'
 import ComponentDemo from '@/pages/ComponentDemo'
+import MenuDemo from '@/pages/MenuDemo'
 import SparrowUI from '../sparrow-ui'
 Vue.use(SparrowUI)
 Vue.use(Router)
@@ -16,6 +17,7 @@ var router = new Router({
         { path: '/about', name: 'About', component: About },
         { path: '/example', name: 'Example', component: Example },
         { path: '/component_demo', name: 'ComponentDemo', component: ComponentDemo },
+        { path: '/menu_demo', name: 'MenuDemo', component: MenuDemo }
     ]
 })
 
