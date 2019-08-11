@@ -1,8 +1,11 @@
 <template>
     <div id="menu_demo">
-        <sa-menu v-bind:dataSource="menuData">
-
-        </sa-menu>
+        <sa-menu
+            v-bind:dataSource="menuData"
+            v-on:onSelect="MenuItemClick"
+            v-bind:width=220
+            v-bind:rowHeight="40"
+        />
     </div>
 </template>
 
@@ -15,7 +18,9 @@
             //'v-dialog': DialogEx
         },
         methods: {
-
+            MenuItemClick: function (item) {
+                console.log(item)
+            }
         },
         data() {
             return {
@@ -93,6 +98,6 @@
 
 <style scoped>
     #menu_demo{
-        padding: 20px;
+
     }
 </style>

@@ -7,29 +7,38 @@
 <script>
     export default{
         name: 'sa-menu',
-        props: ['dataSource'],
+        props: ['dataSource', 'rowHeight', 'width'],
         data() {
             return {
-                rowHeight: 40,
+                _rowHeight: 40,
+                _width: 350,
                 tree_index: 0,
                 tree_pre: {},
+                tree_data_map: {},
                 active_id: null,
                 data_source: this.dataSource
             }
         },
         created(){
-
+            if(this.width && typeof this.width != "number"){
+                throw "props width must be number"
+            }
+            if(this.rowHeight && typeof this.rowHeight != 'number'){
+                throw "props rowHeight must be number"
+            }
+            this._width = this.width || this._width
+            this._rowHeight = this.rowHeight || this._rowHeight
         },
         mounted(){
-            console.log(this.data_source)
+            this.$el.style.width = this._width + 'px'
+            //console.log(this.data_source)
             let root = document.createElement('ul')
-            root.style.width = '200px'
             this.$el.appendChild(root)
             this.renderList(root, this.data_source, 10, 0)
             //设置箭头位置
             let arrowEles = document.getElementById('sa_menu').getElementsByClassName('arrow_right')
             for(let ele of arrowEles){
-                ele.style.top = ((this.rowHeight - 10)/2) + 'px'
+                ele.style.top = ((this._rowHeight - 10)/2) + 'px'
             }
             let ulEles = document.getElementById('sa_menu').getElementsByTagName('ul')
             for(let ele of ulEles){
@@ -37,7 +46,7 @@
                 ele.style.height = ulHeight + 'px'
                 ele.setAttribute('ulHeight', ulHeight)
             }
-            console.log(this.tree_pre)
+            console.log(this.tree_data_map)
         },
         methods:{
             renderList: function($ul, lists, marginLeft, ele_id){
@@ -51,8 +60,8 @@
                         let span = document.createElement('span')
                         span.innerHTML = sub_item.name
                         span.style.paddingLeft = marginLeft + 'px'
-                        span.style.height = this.rowHeight + 'px'
-                        span.style.lineHeight = this.rowHeight + 'px'
+                        span.style.height = this._rowHeight + 'px'
+                        span.style.lineHeight = this._rowHeight + 'px'
                         span.classList.add('fork')
                         span.setAttribute('id', span_id)
                         span.setAttribute('sid', this.tree_index)
@@ -88,7 +97,7 @@
                         //Event
                         span.setAttribute('id', span_id)
                         span.setAttribute('sid', this.tree_index)
-
+                        this.tree_data_map[span_id] = sub_item
                         //Event
                         span.onmouseenter = function (ev) {
                             this.classList.add('span_hover')
@@ -104,14 +113,16 @@
                             }
                             this.active_id = $span.getAttribute('sid')
                             $span.classList.add('leaf_active')
+                            let id = $span.getAttribute('id')
                             //console.log($span.innerHTML, $span.getAttribute('sid'))
-
+                            console.log(this.tree_data_map[id])
+                            this.$emit('onSelect', this.tree_data_map[id])
                         }
                         span.classList.add('leaf')
                         span.innerHTML = sub_item.name
                         span.style.paddingLeft = marginLeft + 'px'
-                        span.style.height = this.rowHeight + 'px'
-                        span.style.lineHeight = this.rowHeight + 'px'
+                        span.style.height = this._rowHeight + 'px'
+                        span.style.lineHeight = this._rowHeight + 'px'
                         $ul.appendChild(li)
 
                     }
@@ -120,7 +131,7 @@
             },
             itemClick: function (event) {
                 let $span = event.target
-                console.log($span)
+                //console.log($span)
                 if($span.classList.contains('arrow_right')){
                     $span = $span.parentNode
                 }
@@ -146,9 +157,9 @@
             changeRootPaths: function($span, offsetHeight){
                 let sid = $span.getAttribute('sid')
                 let cur_id = parseInt(sid)
-                console.log('--------------->',offsetHeight)
+                //console.log('--------------->',offsetHeight)
                 while(true){
-                    console.log(cur_id)
+                    //console.log(cur_id)
                     let $ul = document.getElementById('menu-span-' + cur_id).parentNode.parentNode
                     let cur_height = parseInt($ul.style.height)
                     cur_height += offsetHeight
@@ -170,14 +181,15 @@
     @import "../theme.less";
     #sa_menu{
         color: #333;
-        width: 200px;
-        background-color: #eee;
+        width: 300px;
+        background-color: transparent;
         overflow: hidden;
         font-size: 14px;
         position: relative;
+        border-right: 1px solid #ddd;
         span{
             color:#444;
-            display: inline-block;
+            display: block;
             width: 100%;
             height: 40px;
             line-height: 40px;
@@ -199,14 +211,13 @@
         li{
             list-style-type: none;
             text-align: left;
-            background-color: #eee;
             position: relative;
         }
         .fork{
 
         }
         .leaf{
-            
+
         }
         .leaf_active{
             background-color: fade(@theme_color, 15%);
@@ -234,4 +245,9 @@
         }
     }
 </style>
-
+/*
+dataSource: [{key, name, submenus: [{key, name, submenus}]}, {key, name}]
+onSelect: return {key, name}
+width: menu of width
+rowHeight: menu item of height
+*/
